@@ -1,0 +1,40 @@
+<div class="wrapper" [ngClass]="{ 'show': !isLoggedIn, 'hide': isLoggedIn }">
+  <div class="header">
+    tou
+  </div>
+  <div nz-row>
+    <div nz-col [nzSpan]="6" [nzOffset]="4">
+      <h1>登录</h1>
+      <form nz-form [formGroup]="validateForm" class="login-form" (ngSubmit)="_submitForm()">
+        <div nz-form-item>
+          <div nz-form-control>
+            <nz-input formControlName="userName" [nzPlaceHolder]="'用户名'" [nzSize]="'large'">
+              <ng-template #prefix>
+                <i class="anticon anticon-user"></i>
+              </ng-template>
+            </nz-input>
+            <div nz-form-explain *ngIf="validateForm.controls.userName.dirty&&validateForm.controls.userName.hasError('required')">请输入用户名</div>
+          </div>
+        </div>
+        <div nz-form-item>
+          <div nz-form-control>
+            <nz-input formControlName="password" [nzType]="'密码'" [nzPlaceHolder]="'Password'" [nzSize]="'large'">
+              <ng-template #prefix>
+                <i class="anticon anticon-lock"></i>
+              </ng-template>
+            </nz-input>
+            <div nz-form-explain *ngIf="validateForm.controls.password.dirty&&validateForm.controls.password.hasError('required')">请输入密码</div>
+          </div>
+        </div>
+        <div nz-form-item>
+          <div nz-form-control>
+            <label nz-checkbox formControlName="remember">
+              <span>记住我</span>
+            </label>
+            <button nz-button class="login-form-button" [nzType]="'primary'" [nzSize]="'large'">登录</button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

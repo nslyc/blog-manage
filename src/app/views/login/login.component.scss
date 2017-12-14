@@ -1,0 +1,44 @@
+body,
+html {
+    height: 100%;
+    overflow: hidden;
+}
+
+:host ::ng-deep {
+    overflow: hidden;
+    height: 100%;
+    transition: all 1s;
+    .show {
+        opacity: 1;
+        transform: rotateZ(0deg);
+        z-index: 1;
+    }
+    .hide {
+        opacity: 0;
+        transform: rotateZ(360deg);
+        z-index: -1;
+    }
+    .header {
+        width: 66.66%;
+        margin: 0 auto;
+    }
+    h1 {
+        margin: 0;
+        padding: 0 0 30px;
+        font-size: 25px;
+        font-weight: bold;
+        color: #494949;
+    }
+}
+
+.login-form {
+    max-width: 300px;
+}
+
+.login-form-forgot {
+    float: right;
+}
+
+.login-form-button {
+    margin-left: 10px;
+}
