@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { NzModalService } from 'ng-zorro-antd';
-import { RouteChangedService, LoggedInService } from '../../service';
+import { RouteChangedService, LoggedInService, ApiService } from '../../service';
 
 @Component({
     selector: 'app-layout',
@@ -8,7 +8,7 @@ import { RouteChangedService, LoggedInService } from '../../service';
     styleUrls: ['./layout.component.scss']
 })
 export class LayoutComponent implements OnInit {
-    isLoggedIn: boolean = true;
+    isLoggedIn: boolean;
 
     navData = [
         {
@@ -31,7 +31,8 @@ export class LayoutComponent implements OnInit {
     curUrl;
     constructor(private confirmServ: NzModalService,
         private routeChanged: RouteChangedService,
-        private loggedIn: LoggedInService) {
+        private loggedIn: LoggedInService,
+        private api: ApiService) {
         routeChanged.routeChange().subscribe((value) => {
             this.curUrl = value['url'].slice(1);
         })
@@ -47,12 +48,14 @@ export class LayoutComponent implements OnInit {
             onOk() {
                 self.isLoggedIn = false;
                 self.loggedIn.announceLoggedIn(false);
+                localStorage.clear()
             },
             onCancel() {
             }
         });
     }
     ngOnInit() {
+        this.isLoggedIn = this.api.checkOnline();
     }
 
 }

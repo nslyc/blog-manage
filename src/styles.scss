@@ -2,3 +2,7 @@
 body {
     overflow: hidden;
 }
+@font-face {
+    font-family: MathFont;
+    src: url('./assets/fonts/mathFont.woff2'); /* IE9+ */
+}

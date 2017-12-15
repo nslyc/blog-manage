@@ -1,41 +1,55 @@
 body,
 html {
-  height: 100%;
-  overflow: hidden;
+    height: 100%;
+    overflow: hidden;
 }
+
+.layout {
+    transition: all 1.5s;
+}
+
 :host ::ng-deep {
     overflow: hidden;
     height: 100%;
-    transition: all 1s;
     .show {
         opacity: 1;
-        transform: rotateZ(0deg);
+        transform: rotateZ(0deg) scale(1);
         z-index: 1;
     }
     .hide {
         opacity: 0;
-        transform: rotateZ(360deg);
+        transform: rotateZ(360deg) scale(0.5);
         z-index: -1;
     }
     .nav {
-        line-height: 64px;
         border-bottom: none;
         li {
+            height: 32px;
+            margin-top: 16px;
             border-radius: 5px;
+            a {
+                height: 100%;
+                line-height: 32px;
+                font-size: 13px;
+            }
         }
         .right {
             width: 50px;
+            margin-top: 8px;
             float: right;
             text-align: center;
         }
     }
     .ant-menu.ant-menu-dark .ant-menu-item-selected {
-        background-color: #888;
+        background-color: #f0f0f0;
+        a {
+            color: #333;
+        }
     }
     .logo {
         width: 120px;
         height: 31px;
-        margin: 16px 24px 16px 0;
+        margin: 16px 34px 16px 0;
         font-size: 18px;
         text-align: center;
         line-height: 31px;

@@ -4,41 +4,121 @@ html {
     overflow: hidden;
 }
 
+.wrapper {
+    height: 100%;
+    background: url('../../../assets/images/wave.png') no-repeat;
+    background-size: cover;
+    animation: bgMove 60s infinite linear;
+    transition: all 1.5s;
+}
+
+@keyframes bgMove {
+    0% {
+        background-position: 0% center;
+    }
+    25% {
+        background-position: 50% center;
+    }
+    50% {
+        background-position: 100% center;
+    }
+    75% {
+        background-position: 50% center;
+    }
+    100% {
+        background-position: 0% center;
+    }
+}
+
 :host ::ng-deep {
     overflow: hidden;
     height: 100%;
-    transition: all 1s;
     .show {
         opacity: 1;
-        transform: rotateZ(0deg);
+        transform: translate(0%, 0%) scale(1);
         z-index: 1;
     }
     .hide {
         opacity: 0;
-        transform: rotateZ(360deg);
+        transform: translate(100%, 0%) scale(0.5);
         z-index: -1;
     }
     .header {
         width: 66.66%;
         margin: 0 auto;
+        .top-banner {
+            height: 80px;
+            margin: 10px 0 30px;
+            border-radius: 10px;
+            .left-img {
+                display: inline-block;
+                width: 100px;
+                height: 80px;
+                background: url('../../../assets/images/paperplane.png') no-repeat;
+                background-size: cover;
+                vertical-align: middle;
+            }
+            a {
+                margin-left: -20px;
+                font-size: 25px;
+                color: #888;
+            }
+        }
     }
     h1 {
         margin: 0;
         padding: 0 0 30px;
         font-size: 25px;
         font-weight: bold;
-        color: #494949;
+        color: #595959;
+    }
+    .remember {
+        .ant-checkbox-checked .ant-checkbox-inner {
+            background-color: transparent;
+            border-color: #888;
+        }
+        .ant-checkbox:hover .ant-checkbox-inner {
+            border-color: #666;
+        }
+        .ant-checkbox-checked .ant-checkbox-inner:after {
+            transform: rotate(45deg) scale(1);
+            position: absolute;
+            left: 4px;
+            top: 1px;
+            display: table;
+            width: 5px;
+            height: 8px;
+            border: 2px solid #888;
+            border-top: 0;
+            border-left: 0;
+            content: ' ';
+            transition: all 0.2s cubic-bezier(0.12, 0.4, 0.29, 1.46) 0.1s;
+        }
+    }
+    .login-form-button {
+        margin-left: 10px;
+        background-color: transparent;
+        border-color: #888;
+        color: #888;
+        transition: all 0.35s;
+        &:hover,
+        &:focus {
+            color: #333;
+            background-color: #fff;
+            border-color: #fff;
+            box-shadow: 1px 1px 5px 0 #ccc, -1px -1px 5px 0 #ccc;
+        }
+    }
+    .verse {
+        margin-top: 15px;
+        p {
+            font-size: 1.2rem;
+            font-family: MathFont, 'Microsoft Yahei', '\5b8b\4f53', sans-serif;
+            white-space: nowrap;
+        }
     }
 }
 
 .login-form {
     max-width: 300px;
-}
-
-.login-form-forgot {
-    float: right;
-}
-
-.login-form-button {
-    margin-left: 10px;
 }

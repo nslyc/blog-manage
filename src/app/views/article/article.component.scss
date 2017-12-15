@@ -1,0 +1,26 @@
+:host ::ng-deep {
+    .wrapper {
+        min-height: 300px;
+        margin: 20px;
+        box-shadow: 1px 1px 5px 1px #ccc;
+        .ant-tabs-bar {
+            border-bottom: none;
+            border: none !important;
+            margin-right: 0;
+            .ant-tabs-tab {
+                margin-left: 2px;
+                border: none !important;
+                box-shadow: 1px 1px 3px 1px #ccc;
+            }
+            .ant-tabs-tab-active {
+                padding-bottom: 6px !important;
+                color: #020202 !important;
+            }
+        }
+        .article-list {
+            margin: 10px;
+            min-height: 40px;
+            background-color: #ccc;
+        }
+    }
+}
