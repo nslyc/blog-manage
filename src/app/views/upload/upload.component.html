@@ -1,3 +1,16 @@
-<p>
-  upload works!
-</p>
+<div nz-row>
+  <div nz-col [nzSpan]="15" [nzOffset]="1">
+    <h3 class="title">上传图片</h3>
+    <div nz-col [nzSpan]="10">
+      <div nz-col [nzSpan]="6" class="upload-img-button">
+        <i class="anticon anticon-to-top"></i>选择图片
+        <input type="file" accept="image/*" (change)="showImgName($event)">
+      </div>
+      <div nz-col [nzSpan]="9" [nzOffset]="1" class="upload-img-text">{{imgName}}</div>
+      <div nz-col [nzSpan]="6" class="upload-img-button" (click)="uploadImg($event)">
+        <i class="anticon anticon-to-top"></i>图片上传
+      </div>
+      <nz-progress [nzStrokeWidth]="5" [nzStatus]="'active'" [(ngModel)]="uploadBarSize"></nz-progress>
+    </div>
+  </div>
+</div>

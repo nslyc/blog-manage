@@ -12,6 +12,7 @@ export class ManageComponent implements OnInit {
     data: any = [];
     validateForm: FormGroup;
     modifyForm: FormGroup;
+    userData: any;
     // 重置表单
     resetForm($event?) {
         if ($event) {
@@ -46,6 +47,7 @@ export class ManageComponent implements OnInit {
         this.api.regsiter(this.validateForm.value.userName, this.validateForm.value.passwordFirst, this.validateForm.value.comment).subscribe(res => {
             this._notification.create('success', '恭喜您', '注册成功！');
             this.resetForm();
+            this.getUserList();
         }, err => {
             this._notification.create('error', '提示', '注册失败！');
         })
@@ -95,6 +97,7 @@ export class ManageComponent implements OnInit {
             modifyPasswordSecond: [null, [Validators.required]],
         })
         this.getUserList();
+        this.userData = JSON.parse(localStorage.getItem('$UserData')) || null;
     }
     ngOnInit() {
         this._init();

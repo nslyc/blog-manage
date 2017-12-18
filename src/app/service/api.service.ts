@@ -3,7 +3,7 @@ import { HttpClient, HttpHeaders, HttpParams, HttpRequest } from '@angular/commo
 
 @Injectable()
 export class ApiService {
-    private api = 'http://172.20.10.166:3000/api';
+    private api = 'http://127.0.0.1:3000/api';
 
     constructor(private http: HttpClient, ) { }
     // 检查是否登录
@@ -106,9 +106,15 @@ export class ApiService {
         let url = `${this.api}/articles/${articlesId}`;
         return this.http.get(url);
     }
-    // 上传图片
-    uploadImages(formData) {
-        let url = `${this.api}/upload`;
-        return this.http.post(url, formData);
+    // 图片上传
+    uploadImg(file) {
+        const url = `${this.api}/upload`;
+        const token = JSON.parse(localStorage.getItem('$UserData'))['token'];
+        const headers = new HttpHeaders({ authorization: token })
+        const req = new HttpRequest('POST', url, file, {
+            headers: headers,
+            reportProgress: true,
+        });
+        return this.http.request(req);
     }
 }
