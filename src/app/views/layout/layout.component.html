@@ -1,5 +1,5 @@
 <nz-layout class="layout" [ngClass]="{ 'show': isLoggedIn, 'hide': !isLoggedIn }">
-  <nz-header>
+  <nz-header class="clearfix">
     <div class="logo">Blog</div>
     <ul nz-menu [nzTheme]="'dark'" [nzMode]="'horizontal'" class="nav">
       <ng-container *ngFor="let nav of navData">
@@ -8,9 +8,11 @@
         </li>
       </ng-container>
       <div class="right">
-        <button nz-button [nzType]="'danger'" [nzSize]="size" [nzShape]="'circle'" (click)="showConfirm()">
-          <i class="anticon anticon-logout"></i>
-        </button>
+        <nz-tooltip [nzTitle]="'退出'" [nzPlacement]="'bottom'">
+          <button nz-tooltip nz-button [nzType]="'danger'" [nzSize]="size" [nzShape]="'circle'" (click)="showConfirm()">
+            <i class="anticon anticon-logout"></i>
+          </button>
+        </nz-tooltip>
       </div>
     </ul>
   </nz-header>

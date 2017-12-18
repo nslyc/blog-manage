@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { ReviewComponent, ArticleComponent, TypeinComponent, UploadComponent } from '../views';
+import { ReviewComponent, ArticleComponent, TypeinComponent, UploadComponent, ManageComponent } from '../views';
 const routes: Routes = [
     { path: '', redirectTo: 'review', pathMatch: 'full' },
     {
@@ -18,6 +18,10 @@ const routes: Routes = [
     {
         path: 'upload',
         component: UploadComponent,
+    },
+    {
+        path: 'manage',
+        component: ManageComponent,
     },
 ]
 

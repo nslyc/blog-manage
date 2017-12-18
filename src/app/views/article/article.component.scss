@@ -10,6 +10,7 @@
             .ant-tabs-tab {
                 margin-left: 2px;
                 border: none !important;
+                background-color: transparent;
                 box-shadow: 1px 1px 3px 1px #ccc;
             }
             .ant-tabs-tab-active {
@@ -20,7 +21,7 @@
         .article-list {
             margin: 10px;
             min-height: 40px;
-            background-color: #ccc;
+            // background-color: #ccc;
         }
     }
 }

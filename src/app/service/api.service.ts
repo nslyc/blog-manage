@@ -17,10 +17,98 @@ export class ApiService {
     // 登录
     login(username, password) {
         let url = `${this.api}/login`;
-        let body = { username: username, password: password }
+        let body = { username: username, password: password };
         return this.http.post(url, body);
     }
-    // 获取文章分类
+    // 注册
+    regsiter(username, password, comment) {
+        let url = `${this.api}/register`;
+        let body;
+        if (!!comment) {
+            body = { username: username, password: password, comment: comment };
+        } else {
+            body = { username: username, password: password };
+        }
+        return this.http.post(url, body);
+    }
+    // 修改密码
+    modifyPassword(id, password) {
+        let url = `${this.api}/modifyPassword/${id}`;
+        let body = { password: password };
+        return this.http.post(url, body);
+    }
+    // 获取用户列表
+    getUserList() {
+        let url = `${this.api}/userList`;
+        return this.http.get(url);
+    }
+    // 获取文章列表
+    getArticlesList() {
+        let url = `${this.api}/articles`;
+        return this.http.get(url);
+    }
     // 获取分类下的文章列表
-    // 
+    getArticlesListByCategories(categoriesId) {
+        let url = `${this.api}/articles/categories/${categoriesId}`;
+        return this.http.get(url);
+    }
+    // 获取文章分类
+    getArticlesCategories() {
+        let url = `${this.api}/categories`;
+        return this.http.get(url);
+    }
+    // 新增文章分类
+    addArticlesCategories(data) {
+        let url = `${this.api}/categories`;
+        return this.http.post(url, { name: data['name'] });
+    }
+    // 修改文章分类
+    modifyArticlesCategories(categoriesId, data) {
+        let url = `${this.api}/categories/${categoriesId}`;
+        return this.http.post(url, { name: data['name'] });
+    }
+    // 删除文章分类
+    deleteArticlesCategories(categoriesId) {
+        let url = `${this.api}/categories/${categoriesId}`;
+        return this.http.get(url);
+    }
+    // 新增文章
+    addArticles(data) {
+        let url = `${this.api}/articles`;
+        let body = {
+            title: data.title,
+            type: data.type,
+            author: data.author,
+            content: data.content,
+            categoriesId: data.categoriesId
+        };
+        return this.http.post(url, body);
+    }
+    // 删除文章
+    deleteArticles(articlesId) {
+        let url = `${this.api}/articles/${articlesId}`;
+        return this.http.delete(url);
+    }
+    // 修改文章
+    modifyArticles(articlesId, data) {
+        let url = `${this.api}/articles/${articlesId}`;
+        let body = {
+            title: data.title,
+            type: data.type,
+            author: data.author,
+            content: data.content,
+            categoriesId: data.categoriesId
+        };
+        return this.http.post(url, body);
+    }
+    // 查找文章
+    queryArticles(articlesId) {
+        let url = `${this.api}/articles/${articlesId}`;
+        return this.http.get(url);
+    }
+    // 上传图片
+    uploadImages(formData) {
+        let url = `${this.api}/upload`;
+        return this.http.post(url, formData);
+    }
 }

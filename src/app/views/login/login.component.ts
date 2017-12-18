@@ -12,7 +12,7 @@ export class LoginComponent implements OnInit {
     isLoggedIn: boolean;
 
     validateForm: FormGroup;
-
+    // 验证表单
     _submitForm() {
         for (const i in this.validateForm.controls) {
             if (this.validateForm.controls[i].status == 'INVALID') {

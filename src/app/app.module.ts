@@ -6,11 +6,12 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations'; 
 
 import { NgZorroAntdModule } from 'ng-zorro-antd';
 import { AppComponent } from './app.component';
-import { RoutingModule, RouteChangedService, LoggedInService, ApiService } from './service';
+import { RoutingModule } from './service/routing.module';
+import {  RouteChangedService, LoggedInService, ApiService } from './service';
 
 import { LayoutComponent } from './views/layout/layout.component';
 import { LoginComponent } from './views/login/login.component';
-import { ReviewComponent, ArticleComponent, TypeinComponent, UploadComponent } from './views';
+import { ReviewComponent, ArticleComponent, TypeinComponent, UploadComponent, ManageComponent } from './views';
 
 @NgModule({
     declarations: [
@@ -20,7 +21,8 @@ import { ReviewComponent, ArticleComponent, TypeinComponent, UploadComponent } f
         ReviewComponent,
         ArticleComponent,
         TypeinComponent,
-        UploadComponent
+        UploadComponent,
+        ManageComponent
     ],
     imports: [
         BrowserModule,

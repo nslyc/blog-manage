@@ -26,6 +26,10 @@ export class LayoutComponent implements OnInit {
         {
             title: '上传图片',
             path: 'upload'
+        },
+        {
+            title: '账号管理',
+            path: 'manage'
         }
     ]
     curUrl;
