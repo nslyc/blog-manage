@@ -2,9 +2,17 @@
     .title {
         margin: 20px 0;
     }
+    .img-description {
+        nz-input {
+            margin-bottom: 10px;
+        }
+        .ant-input {
+            background-color: transparent !important;
+        }
+    }
 }
 
-.upload-img-button {
+.img-button {
     position: relative;
     font-weight: 500;
     text-align: center;
@@ -39,7 +47,6 @@
         padding-right: 4px;
     }
 }
-
 .upload-img-text {
     line-height: 28px;
     padding-left: 4px;

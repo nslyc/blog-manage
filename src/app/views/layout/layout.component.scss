@@ -59,8 +59,16 @@ html {
         float: left;
     }
     .content {
-        min-height: 200px;
-        // background-color: #fff;
+        position: absolute;
+        width: 80%;
+        top: 80px;
+        left: 50%;
+        transform: translateX(-50%);
+        bottom: 65px;
+        background-color: #fff;
+        box-shadow: 3px 3px 10px 0 #ccc;
+        border-radius: 5px;
+        overflow: auto;
     }
 }
 

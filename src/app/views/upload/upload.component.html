@@ -1,16 +1,22 @@
 <div nz-row>
-  <div nz-col [nzSpan]="15" [nzOffset]="1">
+  <div nz-col [nzSpan]="10" [nzOffset]="1">
     <h3 class="title">上传图片</h3>
-    <div nz-col [nzSpan]="10">
-      <div nz-col [nzSpan]="6" class="upload-img-button">
-        <i class="anticon anticon-to-top"></i>选择图片
+    <div nz-col [nzSpan]="20">
+      <div nz-col [nzSpan]="6" class="img-button">
+        <i class="anticon anticon-select"></i> 选择图片
         <input type="file" accept="image/*" (change)="showImgName($event)">
       </div>
       <div nz-col [nzSpan]="9" [nzOffset]="1" class="upload-img-text">{{imgName}}</div>
-      <div nz-col [nzSpan]="6" class="upload-img-button" (click)="uploadImg($event)">
-        <i class="anticon anticon-to-top"></i>图片上传
-      </div>
       <nz-progress [nzStrokeWidth]="5" [nzStatus]="'active'" [(ngModel)]="uploadBarSize"></nz-progress>
+    </div>
+    <div nz-col [nzSpan]="19" class="img-description">
+      <nz-input [(ngModel)]="imageDescription" [nzType]="'textarea'" [nzRows]="'4'" [nzPlaceHolder]="'请写一些关于上传图片的描述！'"></nz-input>
+      <div nz-col [nzSpan]="6" class="img-button" (click)="selectCategories()">
+        <i class="anticon anticon-bars"></i> 选择分类
+      </div>
+      <div nz-col [nzSpan]="6" [nzOffset]="12" class="img-button" (click)="uploadImg()">
+        <i class="anticon anticon-to-top"></i> 上传图片
+      </div>
     </div>
   </div>
 </div>

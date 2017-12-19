@@ -11,6 +11,8 @@ import { NzNotificationService } from 'ng-zorro-antd';
 export class UploadComponent implements OnInit {
     imgName: string;
     uploadBarSize: number = 0;
+    imageDescription: string;
+    imageCategoriesId: number = 1;
     formData: FormData;
     constructor(
         private _notification: NzNotificationService,
@@ -30,20 +32,21 @@ export class UploadComponent implements OnInit {
         }
     }
     // 上传图片
-    uploadImg(e) {
+    uploadImg() {
         if (!this.formData) {
             this._notification.create('error', '提示', '为选择图片，请选择后再上传！');
             return;
         }
-        this.api.uploadImg(this.formData).subscribe(event => {
+        this.api.uploadImg(this.formData, this.imageDescription, this.imageCategoriesId).subscribe(event => {
             if (event.type === HttpEventType.UploadProgress) {
                 const percentDone = Math.round(100 * event.loaded / event.total);
                 this.uploadBarSize = percentDone
-                console.log(`上传进度 => ${percentDone}%`);
+                // console.log(`上传进度 => ${percentDone}%`);
             } else if (event instanceof HttpResponse) {
-                console.log('上传完成!');
+                // console.log('上传完成!');
                 console.log(event);
-                console.log(`http://127.0.0.1:3000/uploads/${event.body['fileData']['filename']}`)
+                // console.log(`http://127.0.0.1:3000/uploads/${event.body['fileData']['filename']}`)
+                this.formData = null;
             }
         });
     }

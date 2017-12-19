@@ -54,22 +54,22 @@ export class ApiService {
     }
     // 获取文章分类
     getArticlesCategories() {
-        let url = `${this.api}/categories`;
+        let url = `${this.api}/article/categories`;
         return this.http.get(url);
     }
     // 新增文章分类
     addArticlesCategories(data) {
-        let url = `${this.api}/categories`;
+        let url = `${this.api}/article/categories`;
         return this.http.post(url, { name: data['name'] });
     }
     // 修改文章分类
     modifyArticlesCategories(categoriesId, data) {
-        let url = `${this.api}/categories/${categoriesId}`;
+        let url = `${this.api}/article/categories/${categoriesId}`;
         return this.http.post(url, { name: data['name'] });
     }
     // 删除文章分类
     deleteArticlesCategories(categoriesId) {
-        let url = `${this.api}/categories/${categoriesId}`;
+        let url = `${this.api}/article/categories/${categoriesId}`;
         return this.http.get(url);
     }
     // 新增文章
@@ -107,10 +107,10 @@ export class ApiService {
         return this.http.get(url);
     }
     // 图片上传
-    uploadImg(file) {
-        const url = `${this.api}/upload`;
+    uploadImg(file, description, categoriesId = 1) {
+        const url = `${this.api}/upload/${categoriesId}`;
         const token = JSON.parse(localStorage.getItem('$UserData'))['token'];
-        const headers = new HttpHeaders({ authorization: token })
+        const headers = new HttpHeaders({ authorization: token, description: description })
         const req = new HttpRequest('POST', url, file, {
             headers: headers,
             reportProgress: true,

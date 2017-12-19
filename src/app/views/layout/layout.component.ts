@@ -24,7 +24,7 @@ export class LayoutComponent implements OnInit {
             path: 'typein'
         },
         {
-            title: '上传图片',
+            title: '图片管理',
             path: 'upload'
         },
         {
