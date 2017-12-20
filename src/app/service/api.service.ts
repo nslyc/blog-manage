@@ -32,9 +32,9 @@ export class ApiService {
         return this.http.post(url, body);
     }
     // 修改密码
-    modifyPassword(id, password) {
+    modifyPassword(id, password, newPassword) {
         let url = `${this.api}/modifyPassword/${id}`;
-        let body = { password: password };
+        let body = { password: password, newPassword: newPassword };
         return this.http.post(url, body);
     }
     // 获取用户列表

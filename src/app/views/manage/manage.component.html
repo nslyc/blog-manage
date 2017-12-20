@@ -79,22 +79,32 @@
     <form nz-form [formGroup]="modifyForm" (ngSubmit)="_modifyForm()" nz-col [nzSpan]="4">
       <div nz-form-item>
         <div nz-form-control>
-          <nz-input formControlName="modifyPasswordFirst" [nzType]="'password'" [nzPlaceHolder]="'密码'" [nzSize]="'large'">
+          <nz-input formControlName="password" [nzType]="'password'" [nzPlaceHolder]="'原密码'" [nzSize]="'large'">
             <ng-template #prefix>
               <i class="anticon anticon-lock"></i>
             </ng-template>
           </nz-input>
-          <div nz-form-explain *ngIf="modifyForm.controls.modifyPasswordFirst.dirty&&modifyForm.controls.modifyPasswordFirst.hasError('required')">请输入密码</div>
+          <div nz-form-explain *ngIf="modifyForm.controls.password.dirty&&modifyForm.controls.password.hasError('required')">请输入原密码</div>
         </div>
       </div>
       <div nz-form-item>
         <div nz-form-control>
-          <nz-input formControlName="modifyPasswordSecond" [nzType]="'password'" [nzPlaceHolder]="'确认密码'" [nzSize]="'large'">
+          <nz-input formControlName="modifyPasswordFirst" [nzType]="'password'" [nzPlaceHolder]="'新密码'" [nzSize]="'large'">
             <ng-template #prefix>
               <i class="anticon anticon-lock"></i>
             </ng-template>
           </nz-input>
-          <div nz-form-explain *ngIf="modifyForm.controls.modifyPasswordSecond.dirty&&modifyForm.controls.modifyPasswordSecond.hasError('required')">请再输入密码</div>
+          <div nz-form-explain *ngIf="modifyForm.controls.modifyPasswordFirst.dirty&&modifyForm.controls.modifyPasswordFirst.hasError('required')">请输入新密码</div>
+        </div>
+      </div>
+      <div nz-form-item>
+        <div nz-form-control>
+          <nz-input formControlName="modifyPasswordSecond" [nzType]="'password'" [nzPlaceHolder]="'确认新密码'" [nzSize]="'large'">
+            <ng-template #prefix>
+              <i class="anticon anticon-lock"></i>
+            </ng-template>
+          </nz-input>
+          <div nz-form-explain *ngIf="modifyForm.controls.modifyPasswordSecond.dirty&&modifyForm.controls.modifyPasswordSecond.hasError('required')">请再次输入新密码</div>
         </div>
       </div>
       <button nz-button [nzType]="'primary'" [nzSize]="'large'" [disabled]="!modifyForm.valid">提交</button>

@@ -66,7 +66,7 @@ export class ManageComponent implements OnInit {
             return;
         };
         let id = JSON.parse(localStorage.getItem('$UserData')).id
-        this.api.modifyPassword(id, this.modifyForm.value.modifyPasswordFirst).subscribe(res => {
+        this.api.modifyPassword(id, this.modifyForm.value.password, this.modifyForm.value.modifyPasswordFirst).subscribe(res => {
             this._notification.create('success', '恭喜您', '密码修改成功！');
             this.resetModifyForm();
         }, err => {
@@ -93,6 +93,7 @@ export class ManageComponent implements OnInit {
             comment: [''],
         });
         this.modifyForm = this.fb.group({
+            password: [null, [Validators.required]],
             modifyPasswordFirst: [null, [Validators.required]],
             modifyPasswordSecond: [null, [Validators.required]],
         })
