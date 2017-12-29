@@ -12,9 +12,6 @@
                 <span>标题</span>
               </th>
               <th nz-th [nzWidth]="'10%'">
-                <span>类型</span>
-              </th>
-              <th nz-th [nzWidth]="'10%'">
                 <span>作者</span>
               </th>
               <th nz-th [nzWidth]="'30%'">
@@ -35,7 +32,6 @@
             <ng-template ngFor let-data [ngForOf]="nzTable.data">
               <tr nz-tbody-tr>
                 <td nz-td>{{data.title}}</td>
-                <td nz-td>{{data.type}}</td>
                 <td nz-td>{{data.author}}</td>
                 <td nz-td>{{data.description}}</td>
                 <td nz-td>{{data.create_time | date:'yyyy-MM-dd'}}</td>

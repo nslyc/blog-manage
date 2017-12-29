@@ -1,3 +1,58 @@
-<p>
-  typein works!
-</p>
+<div nz-row>
+  <div nz-col [nzSpan]="10" [nzOffset]="11">
+    <h3 class="title">文章编辑</h3>
+  </div>
+  <form nz-col [nzSpan]="18" nz-form [formGroup]="validateForm">
+    <div nz-form-item nz-row>
+      <div nz-form-label nz-col [nzSpan]="9">
+        <label nz-form-item-required>标题</label>
+      </div>
+      <div nz-col [nzSpan]="15" nz-form-control nzHasFeedback>
+        <nz-input formControlName="title" [nzType]="'text'" [nzSize]="'large'">
+        </nz-input>
+        <div nz-form-explain *ngIf="getFormControl('title').dirty&&getFormControl('title').hasError('required')">请输入标题</div>
+      </div>
+    </div>
+    <div nz-form-item nz-row>
+      <div nz-form-label nz-col [nzSpan]="9">
+        <label nz-form-item-required>作者</label>
+      </div>
+      <div nz-col [nzSpan]="15" nz-form-control nzHasFeedback>
+        <nz-input formControlName="author" [nzType]="'author'" [nzSize]="'large'">
+        </nz-input>
+        <div nz-form-explain *ngIf="getFormControl('author').dirty&&getFormControl('author').hasError('required')">请输入作者</div>
+      </div>
+    </div>
+    <div nz-form-item nz-row>
+      <div nz-form-label nz-col [nzSpan]="9">
+        <label nz-form-item-required>文章类型</label>
+      </div>
+      <div nz-col [nzSpan]="15" nz-form-control>
+        <nz-select formControlName="articleCategories" [(ngModel)]="selectedCategories" nzAllowClear [nzPlaceHolder]="''">
+          <nz-option *ngFor="let option of articleCategoriesData" [nzLabel]="option.name" [nzValue]="option">
+            <ng-template #nzOptionTemplate> {{option.name}}</ng-template>
+          </nz-option>
+        </nz-select>
+        <div nz-form-explain *ngIf="getFormControl('articleCategories').dirty&&getFormControl('articleCategories').hasError('required')">请选择文章分类</div>
+      </div>
+    </div>
+    <div nz-form-item nz-row>
+      <div nz-col [nzSpan]="9" nz-form-label>
+        <label>文章描述</label>
+      </div>
+      <div>
+        <div nz-col [nzSpan]="15" nz-form-control nzHasFeedback>
+          <nz-input formControlName="description" [nzType]="'description'" [nzSize]="'large'">
+          </nz-input>
+          <div nz-form-explain *ngIf="getFormControl('description').dirty&&getFormControl('description').hasError('required')">请选择文章描述</div>
+        </div>
+      </div>
+    </div>
+  </form>
+  <div nz-col [nzSpan]="18">
+    <rich-text-editor nz-col [nzSpan]="17" [nzOffset]="7" (froala)="froalaContent($event)"></rich-text-editor>
+    <div nz-col [nzSpan]="3" [nzOffset]="21" class="img-button upload-button" (click)="addAtricles()">
+      <i class="anticon anticon-upload"></i> 上传文章
+    </div>
+  </div>
+</div>

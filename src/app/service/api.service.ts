@@ -79,6 +79,7 @@ export class ApiService {
             title: data.title,
             type: data.type,
             author: data.author,
+            description: data.description || '',
             content: data.content,
             categoriesId: data.categoriesId
         };
@@ -110,11 +111,31 @@ export class ApiService {
     uploadImg(file, description, categoriesId = 1) {
         const url = `${this.api}/upload/${categoriesId}`;
         const token = JSON.parse(localStorage.getItem('$UserData'))['token'];
-        const headers = new HttpHeaders({ authorization: token, description: description })
+        const headers = new HttpHeaders({ authorization: token, description: description || '' })
         const req = new HttpRequest('POST', url, file, {
             headers: headers,
             reportProgress: true,
         });
         return this.http.request(req);
+    }
+    // 获取图片分类
+    queryImagesCategoriesList() {
+        let url = `${this.api}/image/categories`;
+        return this.http.get(url);
+    }
+    // 新增图片分类
+    addImagesCategories(name) {
+        let url = `${this.api}/image/categories`;
+        return this.http.post(url, { name: name });
+    }
+    // 删除图片分类
+    deleteImagesCategories(categoriesId) {
+        let url = `${this.api}/image/categories/${categoriesId}`;
+        return this.http.delete(url);
+    }
+    // 修改图片分类
+    modiftyImagesCategories(categoriesId, name) {
+        let url = `${this.api}/image/categories/${categoriesId}`;
+        return this.http.post(url, { name: name });
     }
 }

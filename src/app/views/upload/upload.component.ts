@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpEventType, HttpResponse } from '@angular/common/http';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+
 import { ApiService } from '../../service';
 import { NzNotificationService } from 'ng-zorro-antd';
 
@@ -14,9 +16,26 @@ export class UploadComponent implements OnInit {
     imageDescription: string;
     imageCategoriesId: number = 1;
     formData: FormData;
-    constructor(
+    imageCategoriesData: any = [];
+
+    editRow = null;
+    tempEditObject: any = {};
+    isVisible = false;
+    modelTitle: string;
+    validateForm: FormGroup;
+    selectedCategories: any;
+
+    constructor(private fb: FormBuilder,
         private _notification: NzNotificationService,
         private api: ApiService, ) { }
+
+    handleOk = (e) => {
+        this._submitForm();
+    }
+
+    handleCancel = (e) => {
+        this.isVisible = false;
+    }
     // 选择图片
     showImgName(e) {
         if (e.target.files[0]) {
@@ -34,10 +53,14 @@ export class UploadComponent implements OnInit {
     // 上传图片
     uploadImg() {
         if (!this.formData) {
-            this._notification.create('error', '提示', '为选择图片，请选择后再上传！');
+            this._notification.create('error', '提示', '未选择图片，请选择后再上传！');
             return;
         }
-        this.api.uploadImg(this.formData, this.imageDescription, this.imageCategoriesId).subscribe(event => {
+        if (!this.selectedCategories) {
+            this._notification.create('error', '提示', '请为图片选择分类！');
+            return;
+        }
+        this.api.uploadImg(this.formData, this.imageDescription, this.selectedCategories.id).subscribe(event => {
             if (event.type === HttpEventType.UploadProgress) {
                 const percentDone = Math.round(100 * event.loaded / event.total);
                 this.uploadBarSize = percentDone
@@ -50,7 +73,76 @@ export class UploadComponent implements OnInit {
             }
         });
     }
+    // 获取图片分类列表
+    queryImageCategoriesList() {
+        this.api.queryImagesCategoriesList().subscribe(res => {
+            this.imageCategoriesData = res['list'];
+        }, err => {
+            this._notification.create('error', '提示', '数据拉取失败！');
+        })
+    }
+    // 编辑
+    edit(i, data) {
+        this.tempEditObject[i] = { ...data };
+        this.editRow = i;
+    }
+    // 保存图片分类修改
+    save(i, data) {
+        Object.assign(data, this.tempEditObject[i]);
+        this.editRow = null;
+        this.api.modiftyImagesCategories(data.id, this.tempEditObject[i].name).subscribe(res => {
+            this._notification.create('success', '提示', '保存成功！');
+        }, err => {
+            this._notification.create('error', '提示', '保存失败！');
+        })
+    }
+    // 取消编辑
+    cancel(i, data) {
+        this.tempEditObject[i] = {};
+        this.editRow = null;
+    }
+    // 删除分类
+    deleteCategories(i, data) {
+        this.editRow = null;
+        this.api.deleteImagesCategories(data.id).subscribe(res => {
+            this._notification.create('success', '提示', '删除成功！');
+            this.queryImageCategoriesList();
+        }, err => {
+            this._notification.create('error', '提示', '删除失败！');
+        })
+    }
+    // 新增分类
+    addCategories() {
+        this.isVisible = true;
+    }
+    _submitForm() {
+        for (const i in this.validateForm.controls) {
+            if (this.validateForm.controls[i].status == 'INVALID') {
+                for (const j in this.validateForm.controls) {
+                    this.validateForm.controls[j].markAsDirty();
+                }
+                return;
+            }
+        }
+        this.isVisible = false;
+        this.api.addImagesCategories(this.validateForm.value.name).subscribe(res => {
+            this._notification.create('success', '提示', '新增分类成功！');
+            this.queryImageCategoriesList();
+        }, err => {
+            this._notification.create('error', '提示', '新增分类失败！');
+        });
+    }
+    _init() {
+        this.validateForm = this.fb.group({
+            name: [null, [Validators.required]]
+        });
+        this.queryImageCategoriesList()
+        this.imageCategoriesData.forEach(item => {
+            this.tempEditObject[item.key] = {};
+        })
+    }
     ngOnInit() {
+        this._init();
     }
 
 }
