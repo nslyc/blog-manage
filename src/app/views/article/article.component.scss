@@ -1,7 +1,10 @@
 :host ::ng-deep {
+    .title {
+        margin: 20px 0;
+    }
     .wrapper {
-        min-height: 300px;
-        margin: 20px;
+        min-height: 450px;
+        margin-bottom: 20px;
         box-shadow: 1px 1px 5px 1px #ccc;
         .ant-tabs-bar {
             border-bottom: none;
@@ -20,8 +23,61 @@
         }
         .article-list {
             margin: 10px;
-            min-height: 40px;
-            // background-color: #ccc;
+            min-height: 40px; // background-color: #ccc;
         }
+    }
+    .delete {
+        color: #f33;
+    }
+}
+.add-categories {
+    margin-top: 10px;
+}
+.img-button {
+    position: relative;
+    font-weight: 500;
+    text-align: center;
+    background-image: none;
+    border: 1px solid transparent;
+    white-space: nowrap;
+    line-height: 1.15;
+    font-size: 12px;
+    border-radius: 4px;
+    height: 28px;
+    line-height: 28px;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    transition: all .3s cubic-bezier(.645, .045, .355, 1);
+    color: rgba(0, 0, 0, .65);
+    border-color: #d9d9d9;
+    overflow: hidden;
+    cursor: pointer;
+    &:hover {
+        color: #108ee9;
+        border-color: #108ee9;
+    }
+    input {
+        opacity: 0;
+        position: absolute;
+        top: -4px;
+        left: -4px;
+        width: 128px;
+    }
+    i {
+        padding-right: 4px;
+    }
+}
+
+.upload-img-text {
+    line-height: 28px;
+    padding-left: 4px;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    &:hover {
+        overflow: visible;
+        color: #f33;
     }
 }

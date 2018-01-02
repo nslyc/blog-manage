@@ -58,19 +58,19 @@ export class ApiService {
         return this.http.get(url);
     }
     // 新增文章分类
-    addArticlesCategories(data) {
+    addArticlesCategories(name) {
         let url = `${this.api}/article/categories`;
-        return this.http.post(url, { name: data['name'] });
+        return this.http.post(url, { name: name });
     }
     // 修改文章分类
-    modifyArticlesCategories(categoriesId, data) {
+    modifyArticlesCategories(categoriesId, name) {
         let url = `${this.api}/article/categories/${categoriesId}`;
-        return this.http.post(url, { name: data['name'] });
+        return this.http.post(url, { name: name });
     }
     // 删除文章分类
     deleteArticlesCategories(categoriesId) {
         let url = `${this.api}/article/categories/${categoriesId}`;
-        return this.http.get(url);
+        return this.http.delete(url);
     }
     // 新增文章
     addArticles(data) {

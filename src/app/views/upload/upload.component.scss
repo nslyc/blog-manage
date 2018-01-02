@@ -2,11 +2,6 @@
     .title {
         margin: 20px 0;
     }
-    .ant-table {
-        table {
-            margin-bottom: 10px;
-        }
-    }
     .delete {
         color: #f33;
     }
@@ -19,7 +14,9 @@
         }
     }
 }
-
+.add-categories {
+    margin-top: 10px;
+}
 .img-button {
     position: relative;
     font-weight: 500;

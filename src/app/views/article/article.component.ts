@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+
 import { NzNotificationService } from 'ng-zorro-antd';
 import { ApiService } from '../../service';
 import 'rxjs';
@@ -9,19 +11,81 @@ import 'rxjs';
     styleUrls: ['./article.component.scss']
 })
 export class ArticleComponent implements OnInit {
-    tabs: any = [];
+    tabs: any = [{ name: '全部分类' }];
     data: any = [];
-    constructor(private _notification: NzNotificationService,
+
+    articleCategoriesData: any = [];
+    editRow = null;
+    tempEditObject: any = {};
+    isVisible = false;
+    validateForm: FormGroup;
+    currentCategoriesId: number = undefined;
+
+    constructor(private fb: FormBuilder,
+        private _notification: NzNotificationService,
         private api: ApiService) { }
-    getArticlesList() {
-        this.api.getArticlesList().subscribe(res => {
+    handleOk = (e) => {
+        this._submitForm();
+    }
 
+    handleCancel = (e) => {
+        this.isVisible = false;
+    }
+    // 获取文章分类列表
+    queryArticleCategoriesList() {
+        this.api.getArticlesCategories().subscribe(res => {
+            this.articleCategoriesData = res['list'];
         }, err => {
-
+            this._notification.create('error', '提示', '数据拉取失败！');
+        })
+    }
+    // 编辑
+    edit(i, data) {
+        this.tempEditObject[i] = { ...data };
+        this.editRow = i;
+    }
+    // 保存文章分类修改
+    save(i, data) {
+        Object.assign(data, this.tempEditObject[i]);
+        this.editRow = null;
+        this.api.modifyArticlesCategories(data.id, this.tempEditObject[i].name).subscribe(res => {
+            this._notification.create('success', '提示', '保存成功！');
+            this._init();
+        }, err => {
+            this._notification.create('error', '提示', '保存失败！');
+        })
+    }
+    // 取消编辑
+    cancel(i, data) {
+        this.tempEditObject[i] = {};
+        this.editRow = null;
+    }
+    // 删除分类
+    deleteCategories(i, data) {
+        this.editRow = null;
+        this.api.deleteArticlesCategories(data.id).subscribe(res => {
+            this._notification.create('success', '提示', '删除成功！');
+            this._init();
+        }, err => {
+            this._notification.create('error', '提示', '删除失败！');
+        })
+    }
+    // 新增分类
+    addCategories() {
+        this.isVisible = true;
+    }
+    // 删除文章
+    deleteArticles(data) {
+        this.api.deleteArticles(data['id']).subscribe(res => {
+            this._notification.create('success', '提示', '删除成功！');
+            this.clickArticleCategories(this.currentCategoriesId);
+        }, err => {
+            this._notification.create('error', '提示', '删除失败！');
         })
     }
     // 点击tab列表
     clickArticleCategories(id) {
+        this.currentCategoriesId = id || undefined;
         if (!!id) {
             this.api.getArticlesListByCategories(id).subscribe(res => {
                 this.data = res['list'];
@@ -36,15 +100,40 @@ export class ArticleComponent implements OnInit {
             });
         }
     }
+    _submitForm() {
+        for (const i in this.validateForm.controls) {
+            if (this.validateForm.controls[i].status == 'INVALID') {
+                for (const j in this.validateForm.controls) {
+                    this.validateForm.controls[j].markAsDirty();
+                }
+                return;
+            }
+        }
+        this.isVisible = false;
+        this.api.addArticlesCategories(this.validateForm.value.name).subscribe(res => {
+            this._notification.create('success', '提示', '新增分类成功！');
+            this._init();
+        }, err => {
+            this._notification.create('error', '提示', '新增分类失败！');
+        });
+    }
     _init() {
         this.api.getArticlesCategories().mergeMap(res => {
-            this.tabs = [{ name: '全部分类' }, ...res['list']];
+            this.tabs = [{ name: '全部分类' }];
+            this.tabs.push(...res['list']);
             return this.api.getArticlesList()
         }).subscribe(res => {
             this.data = res['list'];
         }, err => {
             this._notification.create('error', '提示', '数据拉取失败！');
         });
+        this.validateForm = this.fb.group({
+            name: [null, [Validators.required]]
+        });
+        this.queryArticleCategoriesList();
+        this.articleCategoriesData.forEach(item => {
+            this.tempEditObject[item.key] = {};
+        })
     }
     ngOnInit() {
         this._init();

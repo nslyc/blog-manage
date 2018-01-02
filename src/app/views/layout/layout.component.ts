@@ -33,6 +33,9 @@ export class LayoutComponent implements OnInit {
         }
     ]
     curUrl;
+    config = {
+        // maxScrollbarLength: 5
+    };
     constructor(private confirmServ: NzModalService,
         private routeChanged: RouteChangedService,
         private loggedIn: LoggedInService,

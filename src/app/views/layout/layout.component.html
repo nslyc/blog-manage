@@ -18,7 +18,9 @@
   </nz-header>
   <nz-content>
     <div class="content">
-      <router-outlet></router-outlet>
+      <perfect-scrollbar [config]="config">
+        <router-outlet></router-outlet>
+      </perfect-scrollbar>
     </div>
   </nz-content>
   <nz-footer>

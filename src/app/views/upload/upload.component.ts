@@ -21,7 +21,6 @@ export class UploadComponent implements OnInit {
     editRow = null;
     tempEditObject: any = {};
     isVisible = false;
-    modelTitle: string;
     validateForm: FormGroup;
     selectedCategories: any;
 

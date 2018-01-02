@@ -2,7 +2,7 @@
   <div nz-col [nzSpan]="10" [nzOffset]="11">
     <h3 class="title">文章编辑</h3>
   </div>
-  <form nz-col [nzSpan]="18" nz-form [formGroup]="validateForm">
+  <form nz-col [nzSpan]="19" nz-form [formGroup]="validateForm">
     <div nz-form-item nz-row>
       <div nz-form-label nz-col [nzSpan]="9">
         <label nz-form-item-required>标题</label>
@@ -49,7 +49,7 @@
       </div>
     </div>
   </form>
-  <div nz-col [nzSpan]="18">
+  <div nz-col [nzSpan]="19">
     <rich-text-editor nz-col [nzSpan]="17" [nzOffset]="7" (froala)="froalaContent($event)"></rich-text-editor>
     <div nz-col [nzSpan]="3" [nzOffset]="21" class="img-button upload-button" (click)="addAtricles()">
       <i class="anticon anticon-upload"></i> 上传文章
