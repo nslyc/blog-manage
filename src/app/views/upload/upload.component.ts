@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { HttpEventType, HttpResponse } from '@angular/common/http';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
-import { ApiService } from '../../service';
+import { ApiService, LoggedInService } from '../../service';
 import { NzNotificationService } from 'ng-zorro-antd';
 
 @Component({
@@ -26,7 +26,9 @@ export class UploadComponent implements OnInit {
 
     constructor(private fb: FormBuilder,
         private _notification: NzNotificationService,
-        private api: ApiService, ) { }
+        private api: ApiService,
+        private loggedIn: LoggedInService,
+    ) { }
 
     handleOk = (e) => {
         this._submitForm();
@@ -70,6 +72,9 @@ export class UploadComponent implements OnInit {
                 // console.log(`http://127.0.0.1:3000/uploads/${event.body['fileData']['filename']}`)
                 this.formData = null;
             }
+        }, err => {
+            this._notification.create('error', '提示', '上传失败');
+            this.loggedIn.userPast();
         });
     }
     // 获取图片分类列表
@@ -93,6 +98,7 @@ export class UploadComponent implements OnInit {
             this._notification.create('success', '提示', '保存成功！');
         }, err => {
             this._notification.create('error', '提示', '保存失败！');
+            this.loggedIn.userPast();
         })
     }
     // 取消编辑
@@ -108,6 +114,7 @@ export class UploadComponent implements OnInit {
             this.queryImageCategoriesList();
         }, err => {
             this._notification.create('error', '提示', '删除失败！');
+            this.loggedIn.userPast();
         })
     }
     // 新增分类
@@ -129,6 +136,7 @@ export class UploadComponent implements OnInit {
             this.queryImageCategoriesList();
         }, err => {
             this._notification.create('error', '提示', '新增分类失败！');
+            this.loggedIn.userPast();
         });
     }
     _init() {

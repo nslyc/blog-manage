@@ -110,8 +110,7 @@ export class ApiService {
     // 图片上传
     uploadImg(file, description, categoriesId = 1) {
         const url = `${this.api}/upload/${categoriesId}`;
-        const token = JSON.parse(localStorage.getItem('$UserData'))['token'];
-        const headers = new HttpHeaders({ authorization: token, description: description || '' })
+        const headers = new HttpHeaders({ description: description || '' })
         const req = new HttpRequest('POST', url, file, {
             headers: headers,
             reportProgress: true,

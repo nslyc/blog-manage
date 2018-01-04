@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { ApiService } from '../../service';
+import { ApiService, LoggedInService } from '../../service';
 import { NzNotificationService } from 'ng-zorro-antd';
 @Component({
     selector: 'app-typein',
@@ -17,6 +17,7 @@ export class TypeinComponent implements OnInit {
     constructor(private fb: FormBuilder,
         private _notification: NzNotificationService,
         private api: ApiService,
+        private loggedIn: LoggedInService,
         private router: Router ) {
     }
     resetForm() {
@@ -29,9 +30,7 @@ export class TypeinComponent implements OnInit {
         return this.validateForm.controls[name];
     }
     froalaContent(e) {
-        console.log(e);
         this.articleContent = e;
-        console.log(this.articleContent)
     }
     // 获取文章分类列表
     queryArticleCategoriesList() {
@@ -68,6 +67,7 @@ export class TypeinComponent implements OnInit {
             this.router.navigate(['/article']);
         }, err => {
             this._notification.create('error', '提示', '文章录入失败！');
+            this.loggedIn.userPast();
         })
     }
     _init() {

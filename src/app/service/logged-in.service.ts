@@ -13,5 +13,11 @@ export class LoggedInService {
 	status$ = this.nowLoginStatus.asObservable();
 	announceLoggedIn(status: boolean) {
 		this.nowLoginStatus.next(status);
-	}
+    }
+    
+    // 用户过期
+    userPast() {
+        this.announceLoggedIn(false);
+        localStorage.clear();
+    }
 }

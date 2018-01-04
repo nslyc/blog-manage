@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NzNotificationService } from 'ng-zorro-antd';
-import { ApiService } from '../../service';
+import { ApiService, LoggedInService } from '../../service';
 
 @Component({
     selector: 'app-manage',
@@ -70,13 +70,15 @@ export class ManageComponent implements OnInit {
             this._notification.create('success', '恭喜您', '密码修改成功！');
             this.resetModifyForm();
         }, err => {
-            console.log(err)
             this._notification.create('error', '提示', '密码修改失败！');
+            this.loggedIn.userPast();
         })
     }
     constructor(private fb: FormBuilder,
         private _notification: NzNotificationService,
-        private api: ApiService) { }
+        private api: ApiService,
+        private loggedIn: LoggedInService,
+    ) { }
     // 获取用户列表
     getUserList() {
         this.api.getUserList().subscribe(res => {

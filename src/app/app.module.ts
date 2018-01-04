@@ -1,7 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'; // 动画模块
 import { PerfectScrollbarModule } from 'ngx-perfect-scrollbar';
 import { PERFECT_SCROLLBAR_CONFIG } from 'ngx-perfect-scrollbar';
@@ -11,7 +11,7 @@ import { FroalaEditorModule, FroalaViewModule } from 'angular2-froala-wysiwyg';
 import { NgZorroAntdModule } from 'ng-zorro-antd';
 import { AppComponent } from './app.component';
 import { RoutingModule } from './service/routing.module';
-import { RouteChangedService, LoggedInService, ApiService } from './service';
+import { RouteChangedService, LoggedInService, ApiService, AuthInterceptor } from './service';
 
 import { LayoutComponent } from './views/layout/layout.component';
 import { LoginComponent } from './views/login/login.component';
@@ -45,10 +45,19 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
         PerfectScrollbarModule,
         RoutingModule
     ],
-    providers: [RouteChangedService, LoggedInService, ApiService, {
-        provide: PERFECT_SCROLLBAR_CONFIG,
-        useValue: DEFAULT_PERFECT_SCROLLBAR_CONFIG
-    }],
+    providers: [
+        RouteChangedService,
+        LoggedInService, ApiService,
+        {
+            provide: PERFECT_SCROLLBAR_CONFIG,
+            useValue: DEFAULT_PERFECT_SCROLLBAR_CONFIG
+        },
+        [{
+            provide: HTTP_INTERCEPTORS,
+            useClass: AuthInterceptor,
+            multi: true,
+        }],
+    ],
     bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 import { NzNotificationService } from 'ng-zorro-antd';
-import { ApiService } from '../../service';
+import { ApiService, LoggedInService } from '../../service';
 import 'rxjs';
 
 @Component({
@@ -23,7 +23,9 @@ export class ArticleComponent implements OnInit {
 
     constructor(private fb: FormBuilder,
         private _notification: NzNotificationService,
-        private api: ApiService) { }
+        private api: ApiService,
+        private loggedIn: LoggedInService,
+    ) { }
     handleOk = (e) => {
         this._submitForm();
     }
@@ -53,6 +55,7 @@ export class ArticleComponent implements OnInit {
             this._init();
         }, err => {
             this._notification.create('error', '提示', '保存失败！');
+            this.loggedIn.userPast();
         })
     }
     // 取消编辑
@@ -68,6 +71,7 @@ export class ArticleComponent implements OnInit {
             this._init();
         }, err => {
             this._notification.create('error', '提示', '删除失败！');
+            this.loggedIn.userPast();
         })
     }
     // 新增分类
@@ -81,6 +85,7 @@ export class ArticleComponent implements OnInit {
             this.clickArticleCategories(this.currentCategoriesId);
         }, err => {
             this._notification.create('error', '提示', '删除失败！');
+            this.loggedIn.userPast();
         })
     }
     // 点击tab列表
@@ -115,6 +120,7 @@ export class ArticleComponent implements OnInit {
             this._init();
         }, err => {
             this._notification.create('error', '提示', '新增分类失败！');
+            this.loggedIn.userPast();
         });
     }
     _init() {
