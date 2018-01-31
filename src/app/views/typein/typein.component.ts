@@ -10,15 +10,31 @@ import { NzNotificationService } from 'ng-zorro-antd';
 })
 export class TypeinComponent implements OnInit {
     articleCategoriesData: any = [];
-    selectedCategories: any;
+    selectedCategories: any = [];
     articleContent: string;
+
+    imagesCategories: any = [];
+    imagesCategoriesData: any = [];
     validateForm: FormGroup;
+    isVisible = false;
+    imagesList: any = [];
+    selectedPath: string;
+    addCoverText: string = '添加封面';
 
     constructor(private fb: FormBuilder,
         private _notification: NzNotificationService,
         private api: ApiService,
         private loggedIn: LoggedInService,
-        private router: Router ) {
+        private router: Router) {
+    }
+    handleOk = (e) => {
+        this.isVisible = false;
+        this.addCoverText = '封面已添加';
+        console.log(this.selectedPath);
+    }
+
+    handleCancel = (e) => {
+        this.isVisible = false;
     }
     resetForm() {
         this.validateForm.reset();
@@ -39,6 +55,28 @@ export class TypeinComponent implements OnInit {
             this.selectedCategories = this.articleCategoriesData[0];
         }, err => {
             this._notification.create('error', '提示', '数据拉取失败！');
+        })
+    }
+    // 添加封面
+    addCover() {
+        this.isVisible = true;
+        this.api.queryImagesCategoriesList().mergeMap(res => {
+            this.imagesCategoriesData = res['list'];
+            this.imagesCategories = this.imagesCategoriesData[0];
+            return this.api.getImagesListByCategories(res['list'][0]['id'])
+        }).subscribe(res => {
+            this.imagesList = res['list'];
+        })
+    }
+    // 选择封面
+    selectedCover(path) {
+        this.selectedPath = path;
+    }
+    // 获取图片列表
+    getImagesList() {
+        this.api.getImagesListByCategories(this.imagesCategories['id'])
+        .subscribe(res => {
+            this.imagesList = res['list'];
         })
     }
     // 新增文章

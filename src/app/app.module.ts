@@ -18,6 +18,8 @@ import { LoginComponent } from './views/login/login.component';
 import { ReviewComponent, ArticleComponent, TypeinComponent, UploadComponent, ManageComponent } from './views';
 import { RichTextEditorComponent } from './component/rich-text-editor/rich-text-editor.component';
 
+import { ImagePathPipe } from './service/image-path.pipe';
+
 const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     suppressScrollX: true
 };
@@ -31,7 +33,8 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
         TypeinComponent,
         UploadComponent,
         ManageComponent,
-        RichTextEditorComponent
+        RichTextEditorComponent,
+        ImagePathPipe,
     ],
     imports: [
         BrowserModule,

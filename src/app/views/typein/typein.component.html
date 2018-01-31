@@ -28,7 +28,7 @@
         <label nz-form-item-required>文章类型</label>
       </div>
       <div nz-col [nzSpan]="15" nz-form-control>
-        <nz-select formControlName="articleCategories" [(ngModel)]="selectedCategories" nzAllowClear [nzPlaceHolder]="''">
+        <nz-select formControlName="articleCategories" [(ngModel)]="selectedCategories" [nzPlaceHolder]="''">
           <nz-option *ngFor="let option of articleCategoriesData" [nzLabel]="option.name" [nzValue]="option">
             <ng-template #nzOptionTemplate> {{option.name}}</ng-template>
           </nz-option>
@@ -51,8 +51,38 @@
   </form>
   <div nz-col [nzSpan]="19">
     <rich-text-editor nz-col [nzSpan]="17" [nzOffset]="7" (froala)="froalaContent($event)"></rich-text-editor>
-    <div nz-col [nzSpan]="3" [nzOffset]="21" class="img-button upload-button" (click)="addAtricles()">
-      <i class="anticon anticon-upload"></i> 上传文章
+    <div nz-col [nzSpan]="8" [nzOffset]="16">
+      <div nz-col [nzSpan]="10" [nzOffset]="2" class="img-button upload-button" (click)="addCover()">
+        <i class="anticon anticon-plus"></i> {{ addCoverText }}
+      </div>
+      <div nz-col [nzSpan]="10" [nzOffset]="2" class="img-button upload-button" (click)="addAtricles()">
+        <i class="anticon anticon-upload"></i> 上传文章
+      </div>
     </div>
   </div>
 </div>
+<nz-modal [nzVisible]="isVisible" [nzTitle]="'添加文章封面'" [nzContent]="modalContent" (nzOnCancel)="handleCancel($event)" (nzOnOk)="handleOk($event)"
+  [nzOkText]="'确定'" [nzWidth]="800">
+  <ng-template #modalContent>
+    选择图片分类：
+    <nz-select [(ngModel)]="imagesCategories" [nzPlaceHolder]="''" (nzOpenChange)="getImagesList()">
+      <nz-option *ngFor="let option of imagesCategoriesData" [nzLabel]="option.name" [nzValue]="option">
+        <ng-template #nzOptionTemplate> {{option.name}}</ng-template>
+      </nz-option>
+    </nz-select>
+    <div class="images-list" nz-row [nzGutter]="16">
+      <div nz-col [nzSpan]="6" *ngFor="let item of imagesList;">
+        <nz-card (click)="selectedCover(item.path)" [ngClass]="{ selected: selectedPath === item.path }">
+          <ng-template #body>
+            <div class="custom-image">
+              <img alt="{{item.description}}" [src]="item.path | imagePath" />
+            </div>
+            <div class="custom-card">
+              <h3>{{item.description}}</h3>
+            </div>
+          </ng-template>
+        </nz-card>
+      </div>
+    </div>
+  </ng-template>
+</nz-modal>

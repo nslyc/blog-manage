@@ -107,16 +107,6 @@ export class ApiService {
         let url = `${this.api}/articles/${articlesId}`;
         return this.http.get(url);
     }
-    // 图片上传
-    uploadImg(file, description, categoriesId = 1) {
-        const url = `${this.api}/upload/${categoriesId}`;
-        const headers = new HttpHeaders({ description: description || '' })
-        const req = new HttpRequest('POST', url, file, {
-            headers: headers,
-            reportProgress: true,
-        });
-        return this.http.request(req);
-    }
     // 获取图片分类
     queryImagesCategoriesList() {
         let url = `${this.api}/image/categories`;
@@ -137,4 +127,27 @@ export class ApiService {
         let url = `${this.api}/image/categories/${categoriesId}`;
         return this.http.post(url, { name: name });
     }
+    // 图片上传
+    uploadImg(file, description, categoriesId = 1) {
+        const url = `${this.api}/upload/${categoriesId}`;
+        const headers = new HttpHeaders({ description: description || '' })
+        const req = new HttpRequest('POST', url, file, {
+            headers: headers,
+            reportProgress: true,
+        });
+        return this.http.request(req);
+    }
+    // 获取图片列表
+    getImagesList() {
+        let url = `${this.api}/images`;
+        return this.http.get(url);
+    }
+    // 获取分类下的图片列表
+    getImagesListByCategories(categoriesId) {
+        let url = `${this.api}/images/categories/${categoriesId}`;
+        return this.http.get(url);
+    }
+    // 修改图片分类和描述
+    
+    // 删除图片
 }
