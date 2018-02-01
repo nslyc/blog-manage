@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import {  Router } from '@angular/router';
 
 import { NzNotificationService } from 'ng-zorro-antd';
 import { ApiService, LoggedInService } from '../../service';
@@ -25,6 +26,7 @@ export class ArticleComponent implements OnInit {
         private _notification: NzNotificationService,
         private api: ApiService,
         private loggedIn: LoggedInService,
+        private router: Router,
     ) { }
     handleOk = (e) => {
         this._submitForm();
@@ -77,6 +79,13 @@ export class ArticleComponent implements OnInit {
     // 新增分类
     addCategories() {
         this.isVisible = true;
+    }
+    // 修改文章
+    modifyArticles(id) {
+        this.router.navigate([`/modify/${id}`]);
+    }
+    previewArticles(id) {
+        this.router.navigate([`/preview/${id}`]);
     }
     // 删除文章
     deleteArticles(data) {

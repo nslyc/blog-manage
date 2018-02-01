@@ -13,6 +13,35 @@
             background-color: transparent !important;
         }
     }
+    .select-title {
+        margin: 20px 0;
+        nz-select {
+            width: 135px;
+        }
+    }
+    .images-list {
+        height: 450px;
+        margin-top: 20px;
+        overflow-y: auto;
+        nz-card {
+            margin-bottom: 10px;
+        }
+        .custom-image img {
+            display: block;
+            width: auto;
+            height: 200px;
+            margin: 0 auto;
+        }
+        .custom-card {
+            padding: 10px 16px;
+            p {
+                color: #999;
+            }
+        }
+        .ant-card-body {
+            padding: 0;
+        }
+    }
 }
 .add-categories {
     margin-top: 10px;

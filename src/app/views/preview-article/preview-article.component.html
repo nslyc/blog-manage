@@ -1,0 +1,18 @@
+<div class="article-wrap">
+    <div class="title">
+        {{ article.title }}
+    </div>
+    <div class="subhead">
+        <span title="时间"><i class="anticon anticon-clock-circle-o"></i> {{ article.create_time | date: 'yyyy-MM-dd' }}</span>
+        <span title="分类"><i class="anticon anticon-switcher"></i> {{ articleCategory.name }}</span>
+        <span title="作者"><i class="anticon anticon-user"></i> {{ article.author }}</span>
+        <span title="评论数"><i class="anticon anticon-message"></i> {{ reviewLength }} 条</span>
+    </div>
+    <div class="con" #content></div>
+    <div class="review" *ngIf="reviewLength !== 0">
+        <h4>正在参与的评论......</h4>
+        <ul>
+            <li></li>
+        </ul>
+    </div>
+</div>

@@ -15,7 +15,7 @@ import { RouteChangedService, LoggedInService, ApiService, AuthInterceptor } fro
 
 import { LayoutComponent } from './views/layout/layout.component';
 import { LoginComponent } from './views/login/login.component';
-import { ReviewComponent, ArticleComponent, TypeinComponent, UploadComponent, ManageComponent } from './views';
+import { ReviewComponent, ArticleComponent, TypeinComponent, UploadComponent, ManageComponent, ModifyArticleComponent, PreviewArticleComponent } from './views';
 import { RichTextEditorComponent } from './component/rich-text-editor/rich-text-editor.component';
 
 import { ImagePathPipe } from './service/image-path.pipe';
@@ -35,6 +35,8 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
         ManageComponent,
         RichTextEditorComponent,
         ImagePathPipe,
+        ModifyArticleComponent,
+        PreviewArticleComponent,
     ],
     imports: [
         BrowserModule,

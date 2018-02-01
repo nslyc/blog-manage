@@ -1,14 +1,15 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { ApiService, LoggedInService } from '../../service';
 import { NzNotificationService } from 'ng-zorro-antd';
 @Component({
-    selector: 'app-typein',
-    templateUrl: './typein.component.html',
-    styleUrls: ['./typein.component.scss']
+    selector: 'app-modify-article',
+    templateUrl: './modify-article.component.html',
+    styleUrls: ['./modify-article.component.scss']
 })
-export class TypeinComponent implements OnInit {
+export class ModifyArticleComponent implements OnInit {
+    article: any = {};
     articleCategoriesData: any = [];
     selectedCategories: any = [];
     articleContent: string;
@@ -19,18 +20,19 @@ export class TypeinComponent implements OnInit {
     isVisible = false;
     imagesList: any = [];
     coverPath: string = '';
-    addCoverText: string = '添加封面';
+    addCoverText: string = '修改封面';
 
     constructor(private fb: FormBuilder,
         private _notification: NzNotificationService,
         private api: ApiService,
         private loggedIn: LoggedInService,
-        private router: Router) {
+        private router: Router,
+        private activatedRoute: ActivatedRoute,
+    ) {
     }
     handleOk = (e) => {
         this.isVisible = false;
         this.addCoverText = '封面已添加';
-        console.log(this.coverPath);
     }
 
     handleCancel = (e) => {
@@ -48,11 +50,21 @@ export class TypeinComponent implements OnInit {
     froalaContent(e) {
         this.articleContent = e;
     }
-    // 获取文章分类列表
-    queryArticleCategoriesList() {
-        this.api.getArticlesCategories().subscribe(res => {
+    // 获取修改文章信息及分类信息
+    queryArticle(id) {
+        this.api.queryArticles(id).mergeMap(res => {
+            this.article = res[0];
+            return this.api.getArticlesCategories()
+        }).subscribe(res => {
             this.articleCategoriesData = res['list'];
-            this.selectedCategories = this.articleCategoriesData[0];
+            this.articleCategoriesData.forEach(ele => {
+                if (this.article['categories_id'] === ele['id']) {
+                    this.selectedCategories = ele;
+                    return;
+                }
+                console.log(this.article)
+            });
+            console.log(res)
         }, err => {
             this._notification.create('error', '提示', '数据拉取失败！');
         })
@@ -66,6 +78,8 @@ export class TypeinComponent implements OnInit {
             return this.api.getImagesListByCategories(res['list'][0]['id'])
         }).subscribe(res => {
             this.imagesList = res['list'];
+        }, err => {
+            this._notification.create('error', '提示', '数据拉取失败！');
         })
     }
     // 选择封面
@@ -75,12 +89,15 @@ export class TypeinComponent implements OnInit {
     // 获取图片列表
     getImagesList() {
         this.api.getImagesListByCategories(this.imagesCategories['id'])
-        .subscribe(res => {
-            this.imagesList = res['list'];
-        })
+            .subscribe(res => {
+                this.imagesList = res['list'];
+            },
+            err => {
+                this._notification.create('error', '提示', '数据拉取失败！');
+            })
     }
-    // 新增文章
-    addAtricles() {
+    // 修改文章
+    modifyAtricles() {
         for (const i in this.validateForm.controls) {
             if (this.validateForm.controls[i].status == 'INVALID') {
                 for (const j in this.validateForm.controls) {
@@ -93,7 +110,7 @@ export class TypeinComponent implements OnInit {
             this._notification.create('error', '提示', '请输入文章内容');
             return;
         }
-        this.api.addArticles({
+        this.api.modifyArticles(this.article['id'], {
             title: this.validateForm.value.title,
             author: this.validateForm.value.author,
             description: this.validateForm.value.description,
@@ -101,11 +118,11 @@ export class TypeinComponent implements OnInit {
             content: this.articleContent,
             categoriesId: this.validateForm.value.articleCategories.id
         }).subscribe(res => {
-            this._notification.create('success', '提示', '恭喜您，文章录入成功！');
+            this._notification.create('success', '提示', '恭喜您，文章修改成功！');
             this.resetForm();
             this.router.navigate(['/article']);
         }, err => {
-            this._notification.create('error', '提示', '文章录入失败！');
+            this._notification.create('error', '提示', '文章修改失败！');
             this.loggedIn.userPast();
         })
     }
@@ -116,10 +133,12 @@ export class TypeinComponent implements OnInit {
             articleCategories: ['', [Validators.required]],
             description: ['']
         });
-        this.queryArticleCategoriesList();
     }
     ngOnInit() {
-        this._init()
+        this.activatedRoute.params.subscribe((params) => {
+            this.queryArticle(params['articleId']);
+            this._init()
+        });
     }
 
 }

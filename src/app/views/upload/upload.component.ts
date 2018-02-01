@@ -17,12 +17,16 @@ export class UploadComponent implements OnInit {
     imageCategoriesId: number = 1;
     formData: FormData;
     imageCategoriesData: any = [];
+    imageCategories: any = [];
 
     editRow = null;
     tempEditObject: any = {};
     isVisible = false;
     validateForm: FormGroup;
     selectedCategories: any;
+
+    imagesList: any = [];
+    coverPath: string = '';
 
     constructor(private fb: FormBuilder,
         private _notification: NzNotificationService,
@@ -36,6 +40,13 @@ export class UploadComponent implements OnInit {
 
     handleCancel = (e) => {
         this.isVisible = false;
+    }
+    // 获取图片列表
+    queryImagesList() {
+        console.log(this.imageCategories)
+        this.api.getImagesListByCategories(this.imageCategories['id']).subscribe(res => {
+            this.imagesList = res['list'];
+        })
     }
     // 选择图片
     showImgName(e) {
@@ -81,6 +92,7 @@ export class UploadComponent implements OnInit {
     queryImageCategoriesList() {
         this.api.queryImagesCategoriesList().subscribe(res => {
             this.imageCategoriesData = res['list'];
+            this.imageCategories = this.imageCategoriesData[0];
         }, err => {
             this._notification.create('error', '提示', '数据拉取失败！');
         })

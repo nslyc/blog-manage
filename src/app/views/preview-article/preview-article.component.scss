@@ -1,0 +1,22 @@
+.article-wrap {
+    margin: 0 20px;
+    .title {
+        margin: 20px 0;
+        font-size: 22px;
+    }
+    .subhead {
+        margin-left: 20px;
+        span {
+            margin-right: 20px;
+        }
+    }
+    .con {
+        min-height: 500px;
+        padding: 20px;
+    }
+    .review {
+        h4 {
+            font-size: 15px;
+        }
+    }
+}

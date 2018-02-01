@@ -72,6 +72,11 @@ export class ApiService {
         let url = `${this.api}/article/categories/${categoriesId}`;
         return this.http.delete(url);
     }
+    // 获取指定id的文章分类
+    queryArticlesCategoriesById(categoriesId) {
+        let url = `${this.api}/article/categories/${categoriesId}`;
+        return this.http.get(url);
+    }
     // 新增文章
     addArticles(data) {
         let url = `${this.api}/articles`;
@@ -80,6 +85,7 @@ export class ApiService {
             type: data.type,
             author: data.author,
             description: data.description || '',
+            cover: data.cover || '',
             content: data.content,
             categoriesId: data.categoriesId
         };

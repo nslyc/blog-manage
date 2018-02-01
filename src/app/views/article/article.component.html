@@ -93,9 +93,9 @@
                   <td nz-td *ngIf="data.modify_time === 0">暂未修改</td>
                   <td nz-td>
                     <span>
-                      <a>修改</a>
+                      <a (click)="modifyArticles(data.id)">修改</a>
                       <span nz-table-divider></span>
-                      <a>查看</a>
+                      <a (click)="previewArticles(data.id)">查看</a>
                       <span nz-table-divider></span>
                       <nz-popconfirm [nzTitle]="'确定要删除吗?'" (nzOnConfirm)="deleteArticles(data)">
                         <a nz-popconfirm class="delete">删除</a>

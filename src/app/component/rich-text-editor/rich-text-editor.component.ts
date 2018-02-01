@@ -3,18 +3,17 @@ import { Component, Output, EventEmitter, OnInit } from "@angular/core";
 @Component({
     selector: 'rich-text-editor',
     templateUrl: './rich-text-editor.component.html',
-    styleUrls: ['./rich-text-editor.component.scss']
+    styleUrls: ['./rich-text-editor.component.scss'],
+    inputs: ['froalaText'],
 })
 export class RichTextEditorComponent implements OnInit {
 
     @Output() froala = new EventEmitter();
+    froalaText: string = "";
 
     option: Object;
-    froalaText: string;
 
     constructor() {
-        this.froalaText = "";
-
     }
 
     ngOnInit() {
