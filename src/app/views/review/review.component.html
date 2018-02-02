@@ -1,3 +1,79 @@
-<p>
-  review works!
-</p>
+<div nz-row>
+
+  <div class="wrap-review" nz-col [nzSpan]="12">
+    <h3>文章评论</h3>
+    <div class="review-list">
+      <ul>
+        <li>
+          <span>名称</span>
+          <span>内容</span>
+          <span>评论时间</span>
+          <span>操作</span>
+        </li>
+        <li *ngFor="let item of reviews; let i = index;" [ngClass]="{ 'grey': i%2 === 0 }">
+          <span>{{ item.name }}</span>
+          <span>{{ item.content }}</span>
+          <span>{{ item.create_time | date: 'yyyy-MM-dd' }}</span>
+          <span>
+            <a (click)="previewReviews(item)">查看</a>
+            <i>|</i>
+            <nz-popconfirm [nzTitle]="'确定要删除吗?'" (nzOnConfirm)="deleteReviews(item.id, i)">
+              <a nz-popconfirm class="delete">删除</a>
+            </nz-popconfirm>
+          </span>
+        </li>
+      </ul>
+      <div class="more" *ngIf="!!moreReviews" (click)="getMoreReviews()">
+        <span>{{ moreReviews }}</span>
+      </div>
+    </div>
+  </div>
+  <div class="wrap-leave" nz-col [nzSpan]="12">
+    <h3>留言板</h3>
+    <div class="leaves-list" nz-row [nzGutter]="16">
+      <div nz-col [nzSpan]="8" *ngFor="let item of leavesList;">
+        <nz-card>
+          <ng-template #body>
+            <div class="custom-card">
+                <div class="leave-content">{{ item.content }}</div>
+                <div class="bottom-time">{{ item.email }} <br> {{ item.create_time | date: 'yyyy-MM-dd' }}</div>
+                <div class="bottom-name" *ngIf="item.site"><a [href]="item.site">by - {{ item.name }}</a></div>
+                <div class="bottom-name" *ngIf="!item.site">by - {{ item.name }}</div>
+            </div>
+          </ng-template>
+        </nz-card>
+      </div>
+    </div>
+  </div>
+</div>
+<nz-modal [nzVisible]="isVisible" [nzTitle]="'查看评论'" [nzContent]="modalContent" (nzOnCancel)="handleCancel($event)" (nzOnOk)="handleOk($event)"
+  [nzOkText]="'确定'" [nzWidth]="800">
+  <ng-template #modalContent>
+    <ul class="review-details">
+      <li>
+        <span>名称：</span>
+        <span>{{ currentReview.name }}</span>
+      </li>
+      <li>
+        <span>内容：</span>
+        <span>{{ currentReview.content }}</span>
+      </li>
+      <li>
+        <span>站点：</span>
+        <span>{{ currentReview.site }}</span>
+      </li>
+      <li>
+        <span>邮箱：</span>
+        <span>{{ currentReview.email }}</span>
+      </li>
+      <li>
+        <span>时间：</span>
+        <span>{{ currentReview.create_time | date: 'yyyy-MM-dd' }}</span>
+      </li>
+      <li>
+        <span>来源：</span>
+        <span>{{ currentReview.article }}</span>
+      </li>
+    </ul>
+  </ng-template>
+</nz-modal>

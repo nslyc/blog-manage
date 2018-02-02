@@ -26,26 +26,26 @@
         nz-card {
             margin-bottom: 10px;
         }
-        .custom-image img {
-            display: block;
-            width: auto;
+        .custom-image {
             height: 200px;
-            margin: 0 auto;
+            img {
+                display: block;
+                width: 100%;
+            }
         }
         .custom-card {
             padding: 10px 16px;
-            p {
-                color: #999;
-            }
         }
         .ant-card-body {
             padding: 0;
         }
     }
 }
+
 .add-categories {
     margin-top: 10px;
 }
+
 .img-button {
     position: relative;
     font-weight: 500;

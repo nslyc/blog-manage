@@ -38,14 +38,16 @@ export class ApiService {
         return this.http.post(url, body);
     }
     // 获取用户列表
-    getUserList() {
+    getUserList(offset = 0, size = 100) {
         let url = `${this.api}/userList`;
-        return this.http.get(url);
+        const headers = new HttpHeaders({ offset: `${offset}`, size: `${size}` })
+        return this.http.get(url, { headers: headers });
     }
     // 获取文章列表
-    getArticlesList() {
+    getArticlesList(offset = 0, size = 100) {
         let url = `${this.api}/articles`;
-        return this.http.get(url);
+        const headers = new HttpHeaders({ offset: `${offset}`, size: `${size}` })
+        return this.http.get(url, { headers: headers });
     }
     // 获取分类下的文章列表
     getArticlesListByCategories(categoriesId) {
@@ -144,16 +146,40 @@ export class ApiService {
         return this.http.request(req);
     }
     // 获取图片列表
-    getImagesList() {
+    getImagesList(offset = 0, size = 100) {
         let url = `${this.api}/images`;
-        return this.http.get(url);
+        const headers = new HttpHeaders({ offset: `${offset}`, size: `${size}` })
+        return this.http.get(url, { headers: headers });
     }
     // 获取分类下的图片列表
-    getImagesListByCategories(categoriesId) {
+    getImagesListByCategories(categoriesId, offset = 0, size = 100) {
         let url = `${this.api}/images/categories/${categoriesId}`;
-        return this.http.get(url);
+        const headers = new HttpHeaders({ offset: `${offset}`, size: `${size}` })
+        return this.http.get(url, { headers: headers });
     }
     // 修改图片分类和描述
-    
     // 删除图片
+
+    // 获取评论列表
+    getReviewsList(offset = 0, size = 100) {
+        let url = `${this.api}/reviews/list`;
+        const headers = new HttpHeaders({ offset: `${offset}`, size: `${size}` })
+        return this.http.post(url, {}, { headers: headers });
+    }
+    // 删除评论
+    deleteReviews(reviewId) {
+        let url = `${this.api}/reviews/${reviewId}`;
+        return this.http.delete(url);
+    }
+    // 获取留言列表
+    getLeavesList(offset = 0, size = 100) {
+        let url = `${this.api}/leaves/list`;
+        const headers = new HttpHeaders({ offset: `${offset}`, size: `${size}` })
+        return this.http.post(url, {}, { headers: headers });
+    }
+    // 删除留言
+    deleteLeaves(reviewId) {
+        let url = `${this.api}/leaves/${reviewId}`;
+        return this.http.delete(url);
+    }
 }

@@ -58,17 +58,15 @@
         .selected {
             border: 1px solid orange;
         }
-        .custom-image img {
-            display: block;
-            width: auto;
+        .custom-image {
             height: 200px;
-            margin: 0 auto;
+            img {
+                display: block;
+                width: 100%;
+            }
         }
         .custom-card {
             padding: 10px 16px;
-            p {
-                color: #999;
-            }
         }
         .ant-card-body {
             padding: 0;
