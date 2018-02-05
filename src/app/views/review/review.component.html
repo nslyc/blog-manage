@@ -31,14 +31,17 @@
   <div class="wrap-leave" nz-col [nzSpan]="12">
     <h3>留言板</h3>
     <div class="leaves-list" nz-row [nzGutter]="16">
-      <div nz-col [nzSpan]="8" *ngFor="let item of leavesList;">
+      <div nz-col [nzSpan]="8" *ngFor="let item of leavesList;let i = index;" (dblclick)="deleteLeave(item.id, index)">
         <nz-card>
           <ng-template #body>
             <div class="custom-card">
-                <div class="leave-content">{{ item.content }}</div>
-                <div class="bottom-time">{{ item.email }} <br> {{ item.create_time | date: 'yyyy-MM-dd' }}</div>
-                <div class="bottom-name" *ngIf="item.site"><a [href]="item.site">by - {{ item.name }}</a></div>
-                <div class="bottom-name" *ngIf="!item.site">by - {{ item.name }}</div>
+              <div class="leave-content">{{ item.content }}</div>
+              <div class="bottom-time">{{ item.email }}
+                <br> {{ item.create_time | date: 'yyyy-MM-dd' }}</div>
+              <div class="bottom-name" *ngIf="item.site">
+                <a [href]="item.site">by - {{ item.name }}</a>
+              </div>
+              <div class="bottom-name" *ngIf="!item.site">by - {{ item.name }}</div>
             </div>
           </ng-template>
         </nz-card>
@@ -60,7 +63,9 @@
       </li>
       <li>
         <span>站点：</span>
-        <span>{{ currentReview.site }}</span>
+        <span>
+          <a [href]="currentReview.site">{{ currentReview.site }}</a>
+        </span>
       </li>
       <li>
         <span>邮箱：</span>

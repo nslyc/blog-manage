@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ApiService, LoggedInService } from '../../service';
-import { NzNotificationService } from 'ng-zorro-antd';
+import { NzNotificationService, NzModalService } from 'ng-zorro-antd';
 
 @Component({
     selector: 'app-review',
@@ -16,6 +16,7 @@ export class ReviewComponent implements OnInit {
     leavesList: any = [];
 
     constructor(private _notification: NzNotificationService,
+        private confirmServ: NzModalService,
         private api: ApiService,
         private loggedIn: LoggedInService, ) { }
 
@@ -29,16 +30,13 @@ export class ReviewComponent implements OnInit {
     // 获取评论列表
     getReviewsList(offset) {
         this.api.getReviewsList(offset, 10).subscribe(res => {
-            if (res['list'].length == 0) {
-                this.moreReviews = '到底了 >>';
-                return;
-            } else if (res['list'].length > 0 && res['list'].length < 10) {
-                // this.moreReviews = undefined;
-                this.moreReviews = '到底了 >>';
-
+            if (res['list'].length !== 10) {
+                this.moreReviews = '到底了';
+            } else {
+                this.moreReviews = '查看更多 >>';
+                this.offset += 10;
             }
             this.reviews.push(...res['list']);
-            this.offset += 10;
         }, err => {
             this._notification.create('error', '提示', '数据拉取失败！');
             this.loggedIn.userPast();
@@ -46,7 +44,7 @@ export class ReviewComponent implements OnInit {
     }
     // 获取更多评论
     getMoreReviews() {
-        if (this.moreReviews === '到底了 >>') {
+        if (this.moreReviews === '到底了') {
             return;
         }
         this.getReviewsList(this.offset);
@@ -75,11 +73,31 @@ export class ReviewComponent implements OnInit {
     // 获取留言列表
     getLeavesList() {
         this.api.getLeavesList().subscribe(res => {
-           this.leavesList = res['list'];
+            this.leavesList = res['list'];
         }, err => {
             this._notification.create('error', '提示', '数据拉取失败！');
             this.loggedIn.userPast();
         })
+    }
+    // 删除留言(对话框)
+    deleteLeave(id,index) {
+        console.log(id);
+        let self = this;
+        this.confirmServ.confirm({
+            title: '您是否确认要删除图片吗？',
+            okText: '删除',
+            onOk() {
+                self.api.deleteLeaves(id).subscribe(res => {
+                    self._notification.create('success', '提示', '删除成功！');
+                    self.leavesList.splice(index, 1);
+                }, err => {
+                    self._notification.create('error', '提示', '删除失败！');
+                    self.loggedIn.userPast();
+                })
+            },
+            onCancel() {
+            }
+        });
     }
     _init() {
         this.getReviewsList(0);

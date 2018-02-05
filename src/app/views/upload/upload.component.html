@@ -88,7 +88,7 @@
               <img alt="{{item.description}}" [src]="item.path | imagePath" />
             </div>
             <div class="custom-card">
-              <h3>{{item.description}}</h3>
+              <h3>{{item.description || '没有描述...'}}</h3>
             </div>
           </ng-template>
         </nz-card>

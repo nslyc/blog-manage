@@ -43,9 +43,10 @@ export class UploadComponent implements OnInit {
     }
     // 获取图片列表
     queryImagesList() {
-        console.log(this.imageCategories)
         this.api.getImagesListByCategories(this.imageCategories['id']).subscribe(res => {
             this.imagesList = res['list'];
+        },err=>{
+            this._notification.create('error', '提示', '数据拉取失败');
         })
     }
     // 选择图片
@@ -72,7 +73,7 @@ export class UploadComponent implements OnInit {
             this._notification.create('error', '提示', '请为图片选择分类！');
             return;
         }
-        this.api.uploadImg(this.formData, this.imageDescription, this.selectedCategories.id).subscribe(event => {
+        this.api.uploadImg(this.formData, this.imageDescription, this.selectedCategories.id).mergeMap(event => {
             if (event.type === HttpEventType.UploadProgress) {
                 const percentDone = Math.round(100 * event.loaded / event.total);
                 this.uploadBarSize = percentDone
@@ -83,6 +84,9 @@ export class UploadComponent implements OnInit {
                 // console.log(`http://127.0.0.1:3000/uploads/${event.body['fileData']['filename']}`)
                 this.formData = null;
             }
+            return this.api.getImagesListByCategories(this.imageCategories['id']);
+        }).subscribe(res => {
+            this.imagesList = res['list'];
         }, err => {
             this._notification.create('error', '提示', '上传失败');
             this.loggedIn.userPast();
@@ -155,7 +159,15 @@ export class UploadComponent implements OnInit {
         this.validateForm = this.fb.group({
             name: [null, [Validators.required]]
         });
-        this.queryImageCategoriesList()
+        this.api.queryImagesCategoriesList().mergeMap(res => {
+            this.imageCategoriesData = res['list'];
+            this.imageCategories = this.imageCategoriesData[0];
+            return this.api.getImagesListByCategories(this.imageCategories['id']);
+        }).subscribe(res => {
+            this.imagesList = res['list'];
+        }, err => {
+            this._notification.create('error', '提示', '数据拉取失败！');
+        })
         this.imageCategoriesData.forEach(item => {
             this.tempEditObject[item.key] = {};
         })

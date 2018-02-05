@@ -62,11 +62,19 @@
             height: 200px;
             img {
                 display: block;
-                width: 100%;
+                max-width: 100%;
+                max-height: 100%;
+                margin: auto;
             }
         }
         .custom-card {
             padding: 10px 16px;
+            h3 {
+                height: 22px;
+                white-space: nowrap;
+                text-overflow: ellipsis;
+                overflow: hidden;
+            }
         }
         .ant-card-body {
             padding: 0;
