@@ -103,9 +103,10 @@ export class ApiService {
         let url = `${this.api}/articles/${articlesId}`;
         let body = {
             title: data.title,
-            type: data.type,
+            cover: data.cover,
             author: data.author,
             content: data.content,
+            description: data.description,
             categoriesId: data.categoriesId
         };
         return this.http.post(url, body);

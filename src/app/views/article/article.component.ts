@@ -12,7 +12,7 @@ import 'rxjs';
     styleUrls: ['./article.component.scss']
 })
 export class ArticleComponent implements OnInit {
-    tabs: any = [{ name: '全部分类' }];
+    tabs: any = [{ name: '全部' }];
     data: any = [];
 
     articleCategoriesData: any = [];
@@ -57,7 +57,9 @@ export class ArticleComponent implements OnInit {
             this._init();
         }, err => {
             this._notification.create('error', '提示', '保存失败！');
-            this.loggedIn.userPast();
+            if(err.status === 401) {
+                this.loggedIn.userPast();
+            }
         })
     }
     // 取消编辑
@@ -73,7 +75,9 @@ export class ArticleComponent implements OnInit {
             this._init();
         }, err => {
             this._notification.create('error', '提示', '删除失败！');
-            this.loggedIn.userPast();
+            if(err.status === 401) {
+                this.loggedIn.userPast();
+            }
         })
     }
     // 新增分类
@@ -94,7 +98,9 @@ export class ArticleComponent implements OnInit {
             this.clickArticleCategories(this.currentCategoriesId);
         }, err => {
             this._notification.create('error', '提示', '删除失败！');
-            this.loggedIn.userPast();
+            if(err.status === 401) {
+                this.loggedIn.userPast();
+            }
         })
     }
     // 点击tab列表
@@ -129,12 +135,14 @@ export class ArticleComponent implements OnInit {
             this._init();
         }, err => {
             this._notification.create('error', '提示', '新增分类失败！');
-            this.loggedIn.userPast();
+            if(err.status === 401) {
+                this.loggedIn.userPast();
+            }
         });
     }
     _init() {
         this.api.getArticlesCategories().mergeMap(res => {
-            this.tabs = [{ name: '全部分类' }];
+            this.tabs = [{ name: '全部' }];
             this.tabs.push(...res['list']);
             return this.api.getArticlesList()
         }).subscribe(res => {

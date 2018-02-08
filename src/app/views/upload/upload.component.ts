@@ -89,7 +89,9 @@ export class UploadComponent implements OnInit {
             this.imagesList = res['list'];
         }, err => {
             this._notification.create('error', '提示', '上传失败');
-            this.loggedIn.userPast();
+            if(err.status === 401) {
+                this.loggedIn.userPast();
+            }
         });
     }
     // 获取图片分类列表
@@ -114,7 +116,9 @@ export class UploadComponent implements OnInit {
             this._notification.create('success', '提示', '保存成功！');
         }, err => {
             this._notification.create('error', '提示', '保存失败！');
-            this.loggedIn.userPast();
+            if(err.status === 401) {
+                this.loggedIn.userPast();
+            }
         })
     }
     // 取消编辑
@@ -130,7 +134,9 @@ export class UploadComponent implements OnInit {
             this.queryImageCategoriesList();
         }, err => {
             this._notification.create('error', '提示', '删除失败！');
-            this.loggedIn.userPast();
+            if(err.status === 401) {
+                this.loggedIn.userPast();
+            }
         })
     }
     // 新增分类
@@ -152,7 +158,9 @@ export class UploadComponent implements OnInit {
             this.queryImageCategoriesList();
         }, err => {
             this._notification.create('error', '提示', '新增分类失败！');
-            this.loggedIn.userPast();
+            if(err.status === 401) {
+                this.loggedIn.userPast();
+            }
         });
     }
     _init() {

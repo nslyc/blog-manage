@@ -106,7 +106,9 @@ export class TypeinComponent implements OnInit {
             this.router.navigate(['/article']);
         }, err => {
             this._notification.create('error', '提示', '文章录入失败！');
-            this.loggedIn.userPast();
+            if(err.status === 401) {
+                this.loggedIn.userPast();
+            }
         })
     }
     _init() {

@@ -22,7 +22,7 @@ export class PreviewArticleComponent implements OnInit {
         this.api.queryArticles(id).mergeMap(res => {
             this.article = res[0];
             this.content.nativeElement.innerHTML = this.article['content'];
-            return this.api.queryArticlesCategoriesById(this.article['id']);
+            return this.api.queryArticlesCategoriesById(this.article['categories_id']);
         }).subscribe(res => {
             this.articleCategory = res[0];
         }, err => {

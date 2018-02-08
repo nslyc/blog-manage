@@ -71,7 +71,9 @@ export class ManageComponent implements OnInit {
             this.resetModifyForm();
         }, err => {
             this._notification.create('error', '提示', '密码修改失败！');
-            this.loggedIn.userPast();
+            if(err.status === 401) {
+                this.loggedIn.userPast();
+            }
         })
     }
     constructor(private fb: FormBuilder,

@@ -39,7 +39,9 @@ export class ReviewComponent implements OnInit {
             this.reviews.push(...res['list']);
         }, err => {
             this._notification.create('error', '提示', '数据拉取失败！');
-            this.loggedIn.userPast();
+            if(err.status === 401) {
+                this.loggedIn.userPast();
+            }
         })
     }
     // 获取更多评论
@@ -57,7 +59,9 @@ export class ReviewComponent implements OnInit {
             this.currentReview['article'] = res[0]['title'];
         }, err => {
             this._notification.create('error', '提示', '数据拉取失败！');
-            this.loggedIn.userPast();
+            if(err.status === 401) {
+                this.loggedIn.userPast();
+            }
         })
     }
     // 删除评论
@@ -67,7 +71,9 @@ export class ReviewComponent implements OnInit {
             this.reviews.splice(index, 1);
         }, err => {
             this._notification.create('error', '提示', '删除失败！');
-            this.loggedIn.userPast();
+            if(err.status === 401) {
+                this.loggedIn.userPast();
+            }
         })
     }
     // 获取留言列表
@@ -76,7 +82,9 @@ export class ReviewComponent implements OnInit {
             this.leavesList = res['list'];
         }, err => {
             this._notification.create('error', '提示', '数据拉取失败！');
-            this.loggedIn.userPast();
+            if(err.status === 401) {
+                this.loggedIn.userPast();
+            }
         })
     }
     // 删除留言(对话框)
